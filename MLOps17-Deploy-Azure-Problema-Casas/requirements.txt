@@ -1,0 +1,17 @@
+# Flask & Web
+flask==2.3.3
+flask-cors==4.0.0
+
+# Data Processing
+# numpy 1.26.4: ultima serie 1.x, primera con wheels cp312.
+# Se mantiene en 1.x a proposito: el pickle del pipeline referencia
+# numpy.core.multiarray, ruta que numpy 2.x renombro a numpy._core.
+numpy==1.26.4
+pandas==2.2.3
+joblib==1.3.2
+
+# Machine Learning
+# scikit-learn 1.3.2 se mantiene SIN cambios: es la libreria que serializo
+# el pipeline y ya publica wheels cp312. Cambiarla es lo que romperia el modelo.
+scikit-learn==1.3.2
+feature-engine==1.6.2

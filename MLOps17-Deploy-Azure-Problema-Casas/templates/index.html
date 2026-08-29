@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Precios de Casas - Lasso Regressor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='images/datapath-logo.png') }}" alt="DATAPATH Logo" class="logo" onerror="this.style.display='none'">
+            </div>
+            <h1>🏠 Predicción de Precios de Casas</h1>
+            <p class="subtitle">Modelo Lasso Regressor - Kevin Inofuente Colque - DATAPATH</p>
+        </header>
+
+        <main>
+            <div class="upload-card">
+                <div class="card-header">
+                    <span class="icon">📊</span>
+                    <h2>Cargar Dataset</h2>
+                </div>
+                
+                <p class="description">
+                    Suba un archivo CSV con los datos de las propiedades para obtener 
+                    predicciones de precios utilizando nuestro modelo de Machine Learning.
+                </p>
+
+                {% if error %}
+                <div class="error-message">
+                    <span>⚠️</span> {{ error }}
+                </div>
+                {% endif %}
+
+                <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <div class="file-input-wrapper">
+                        <input type="file" name="file" id="file" accept=".csv" required>
+                        <label for="file" class="file-label">
+                            <span class="file-icon">📁</span>
+                            <span class="file-text">Seleccionar archivo CSV</span>
+                            <span class="file-hint">o arrastra y suelta aquí</span>
+                        </label>
+                        <span class="file-name" id="fileName"></span>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-icon">🚀</span>
+                        Procesar y Predecir
+                    </button>
+                </form>
+
+                <div class="info-section">
+                    <h3>📋 Columnas requeridas en el CSV:</h3>
+                    <div class="columns-grid">
+                        <span class="column-tag">MSSubClass</span>
+                        <span class="column-tag">MSZoning</span>
+                        <span class="column-tag">LotFrontage</span>
+                        <span class="column-tag">LotShape</span>
+                        <span class="column-tag">OverallQual</span>
+                        <span class="column-tag">YearRemodAdd</span>
+                        <span class="column-tag">GrLivArea</span>
+                        <span class="column-tag">KitchenQual</span>
+                        <span class="column-tag">GarageCars</span>
+                        <span class="column-tag more">+28 más</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Desarrollado con ❤️ usando Flask + Scikit-learn | Deploy en Azure</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mostrar nombre del archivo seleccionado
+        document.getElementById('file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : '';
+            document.getElementById('fileName').textContent = fileName;
+            if (fileName) {
+                document.querySelector('.file-label').classList.add('has-file');
+            }
+        });
+
+        // Drag and drop
+        const fileWrapper = document.querySelector('.file-input-wrapper');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            fileWrapper.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            fileWrapper.addEventListener(eventName, () => fileWrapper.classList.add('drag-over'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            fileWrapper.addEventListener(eventName, () => fileWrapper.classList.remove('drag-over'), false);
+        });
+
+        fileWrapper.addEventListener('drop', function(e) {
+            const files = e.dataTransfer.files;
+            document.getElementById('file').files = files;
+            document.getElementById('fileName').textContent = files[0].name;
+            document.querySelector('.file-label').classList.add('has-file');
+        });
+    </script>
+</body>
+</html>

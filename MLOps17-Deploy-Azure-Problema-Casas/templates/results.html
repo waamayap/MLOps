@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Predicción de Precios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container results-page">
+        <header>
+            <h1>📊 Resultados de la Predicción</h1>
+            <p class="subtitle">Modelo Lasso Regressor - Precios de Casas</p>
+        </header>
+
+        <main>
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon">🏠</span>
+                    <div class="stat-info">
+                        <span class="stat-value">{{ stats.total_registros }}</span>
+                        <span class="stat-label">Propiedades Analizadas</span>
+                    </div>
+                </div>
+                <div class="stat-card highlight">
+                    <span class="stat-icon">💰</span>
+                    <div class="stat-info">
+                        <span class="stat-value">{{ stats.precio_promedio }}</span>
+                        <span class="stat-label">Precio Promedio</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">📉</span>
+                    <div class="stat-info">
+                        <span class="stat-value">{{ stats.precio_minimo }}</span>
+                        <span class="stat-label">Precio Mínimo</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">📈</span>
+                    <div class="stat-info">
+                        <span class="stat-value">{{ stats.precio_maximo }}</span>
+                        <span class="stat-label">Precio Máximo</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="results-card">
+                <div class="card-header">
+                    <h2>📋 Datos con Predicciones</h2>
+                    <span class="badge">Mostrando primeras 20 de {{ total_rows }} filas</span>
+                </div>
+                
+                <div class="table-wrapper">
+                    {{ tabla | safe }}
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions">
+                <a href="{{ url_for('download') }}" class="btn btn-primary">
+                    <span>⬇️</span> Descargar CSV Completo
+                </a>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary">
+                    <span>🔄</span> Nueva Predicción
+                </a>
+            </div>
+        </main>
+
+        <footer>
+            <p>Desarrollado con ❤️ usando Flask + Scikit-learn | Deploy en Azure</p>
+        </footer>
+    </div>
+</body>
+</html>
