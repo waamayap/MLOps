@@ -1,0 +1,11 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+.venv
+venv
+data/
+*.md
+.env
+comandos.txt
+tabla_prediction_and_items.txt
