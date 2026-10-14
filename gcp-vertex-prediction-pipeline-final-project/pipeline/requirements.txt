@@ -1,0 +1,4 @@
+kfp>=2.7,<3
+google-cloud-pipeline-components
+google-cloud-aiplatform
+google-cloud-storage
